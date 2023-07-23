@@ -11,26 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check for GitHub label
-        id: get_label
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const labels = context.payload.pull_request.labels.map(label => label.name);
-            const isMinorRelease = labels.includes('minor');
-            const isPatchRelease = labels.includes('patch');
-
-            if (isMinorRelease) {
-              console.log('minor');
-              core.setOutput('release_type', 'minor');
-            } else if (isPatchRelease) {
-              console.log('patch');
-              core.setOutput('release_type', 'patch');
-            } else {
-              console.log('none');
-              core.setOutput('release_type', 'none');
-            }
-
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -38,8 +18,14 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+      
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-      - name: Run Standard Version
-        if: steps.get_label.outputs.release_type != 'none'
-        run: npx standard-version --no-verify --tag-prefix --release-as ${{ steps.get_label.outputs.release_type }}
+      - name: Configure committer
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<jchhun-FP+1@familyproud.com>"
+      - name: Bump version
+        uses: qzb/standard-version-action@v1.0.5
 
