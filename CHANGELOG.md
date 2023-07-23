@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.0.93 (2023-07-23)
+
+
+### Chores
+
+* **release:** 1.0.92 ([f578e3f](https://github.com/WingChhun/react-next-template/commits/f578e3fbd5733f3819ac21a2fa88a7b1e27f62bb))
+
 ### 1.0.92 (2023-07-23)
 
 
